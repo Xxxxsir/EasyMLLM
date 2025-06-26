@@ -1,4 +1,5 @@
 当前支持
+
 🏁 模型：
 -ViT (vit_base)
 
@@ -30,3 +31,16 @@ EsayMLLM/
 -增加混合精度训练
 
 -增加可视化脚本
+
+快速开始：
+’‘’python train.py \
+    --model_name vit \
+    --dataset_name covid \
+    --classes_num 4 \
+    --batch_size 16 \
+    --epochs 20 \
+    --lr 1e-3 \
+    --weight_decay 1e-4 \
+    --seed 42 \
+    --pre_trained False‘’‘
+
