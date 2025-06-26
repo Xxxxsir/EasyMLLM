@@ -313,20 +313,36 @@ class VisionTransformer(nn.Module):
         return x
 
 
-def vit_base_patch16_224(num_classes:int = 1000,
-                         pretrained:bool = False,
-                         pretrained_path:str = None,
-                         **kwargs):
+def vit_base(num_classes:int = 1000,
+            img_size:int = 224,
+            patch_size:int = 16,
+            in_channel:int = 3,
+            embed_dim:int = 768,
+            depth :int = 12,
+            num_heads:int = 12,
+            pretrained:bool = False,
+            pretrained_path:str = None,
+            **kwargs):
 
     model = VisionTransformer(
-        img_size=224,
-        patch_size=16,
-        embed_dim=768,
-        depth=12,
-        num_heads=12,
+        img_size=img_size,
+        patch_size=patch_size,
+        in_channel=in_channel,
+        embed_dim=embed_dim,
+        depth=depth,
+        num_heads=num_heads,
         representation_size=None,
         num_classes=num_classes
     )
+
+    print(f"ViT Model Created with parameters:\n"
+          f"  num_classes       = {num_classes}\n"
+          f"  img_size          = {img_size}\n"
+          f"  patch_size        = {patch_size}\n"
+          f"  in_channel        = {in_channel}\n"
+          f"  depth             = {depth}\n"
+          f"  num_heads         = {num_heads}\n"
+          f"  embed_dim         = {embed_dim}\n")
 
     if pretrained:
         if pretrained_path is None:

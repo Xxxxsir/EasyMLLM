@@ -91,7 +91,7 @@ def train(model_name:str,
           device="cpu",
           pre_trained=False,
           momentum=0.9,
-          save_dir="./results",
+          save_dir="./model_ckpt",
           ):
     
     if not os.path.exists(save_dir):
@@ -138,13 +138,14 @@ def main():
     print(f"Using device: {device}")
 
     print(f"Loading model: {args.model_name}")
-    model = get_model(args.model_name, args.classes_num, args.pre_trained)
+    model = get_model(args.model_name, args.classes_num, args.pre_trained,\
+                      img_size=28,patch_size=4,in_channel=1,embed_dim=128,depth=6,num_heads=4)
     model.to(device)
 
     print(f"Loading dataset: {args.dataset_name}")
     train_loader, val_loader, test_loader = get_dataloaders(
         dataset_name=args.dataset_name,
-        dataset_root_dir=r".\datasets\COVID_19_Radiography_Dataset",
+        dataset_root_dir=r".\datasets",
         batch_size=args.batch_size,
         num_workers=4)
     
@@ -159,7 +160,7 @@ def main():
           device=device,
           pre_trained=args.pre_trained,
           momentum=0.9,
-          save_dir="./results"
+          save_dir="./model_ckpt"
     )
     
 if __name__ == "__main__":

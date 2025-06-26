@@ -3,9 +3,11 @@ import torch
 from torch.utils.data import DataLoader
 import torchvision.transforms as transforms
 from torch.utils.data import Dataset
-
+from torchvision import datasets
 from pathlib import Path
 from PIL import Image
+from torch.utils.data import random_split
+
 
 idx_to_class_covid = {
     0:"COVID",
@@ -70,12 +72,43 @@ def get_transform_covidradiography(split:str = 'train'):
             ]
         )
 
+def get_transform(dataset_name:str, split:str = 'train'):
+    if dataset_name == "covid":
+        return get_transform_covidradiography(split)
+    elif dataset_name == "mnist":
+        if split == 'train':
+            return transforms.Compose(
+                [
+                    transforms.RandomRotation(10),
+                    transforms.Resize((28, 28)),
+                    transforms.ToTensor(),
+                    transforms.Normalize((0.1307,), (0.3081,))
+                ]
+            )
+        elif split == 'test':
+            return transforms.Compose(
+                [
+                    transforms.Resize((28, 28)),
+                    transforms.ToTensor(),
+                    transforms.Normalize((0.1307,), (0.3081,))
+                ]
+            )
+    else:
+        raise ValueError(f"Dataset {dataset_name} is not supported now.")
+
 def get_dataloaders(dataset_name,dataset_root_dir,batch_size,num_workers=4, pin_flag:bool = True):
     root_dir = Path(dataset_root_dir)
     if dataset_name == "covid":
         train_dataset = CovidRadioGraphyDataset(root_dir=root_dir / "train", transform=get_transform_covidradiography("train"))
         val_dataset   = CovidRadioGraphyDataset(root_dir=root_dir / "val", transform=get_transform_covidradiography("val"))
         test_dataset  = CovidRadioGraphyDataset(root_dir=root_dir / "test", transform=get_transform_covidradiography("test"))
+    elif dataset_name == "mnist":
+        origin_train_dataset = datasets.MNIST(root=dataset_root_dir,train=True,download=True,transform=get_transform("mnist", "train"))
+        # Split the MNIST dataset into train and validation sets
+        train_size = 50000
+        val_size = 10000
+        train_dataset, val_dataset = random_split(origin_train_dataset, [train_size, val_size])
+        test_dataset  = datasets.MNIST(root=dataset_root_dir,train=False,download=True,transform=get_transform("mnist", "test"))
     else:
         raise ValueError(f"Dataset {dataset_name} is not supported now.")
 
