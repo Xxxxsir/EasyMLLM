@@ -1,5 +1,5 @@
 __pycache__/ 
-results/ 
+model_ckpt/ 
 datasets/
 .vscode/ 
 .idea/ 
