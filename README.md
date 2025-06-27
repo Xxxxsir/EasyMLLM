@@ -1,6 +1,8 @@
 # EasyMLLM
 
-EasyMLLM is a lightweight machine learning library designed for training, testing, and inference on various models and datasets. It supports modularity and extensibility for different machine learning tasks.
+[English](README.md) | [中文](README_zh.md)
+
+EasyMLLM is a beginner-friendly machine learning library designed to help students like myself quickly get started with machine learning by providing simple APIs for training, testing, and inference across various models and datasets. It supports modularity and extensibility, making it suitable for different machine learning tasks. The library will continue to expand into various fields, including implementing and reproducing cutting-edge techniques such as model attacks and model merging.
 
 ## Installation
 
@@ -81,3 +83,4 @@ EasyMLLM/
 ## License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
+
