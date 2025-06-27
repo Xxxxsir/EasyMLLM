@@ -42,10 +42,13 @@ if __name__ == '__main__':
         raise FileNotFoundError(f"Image not found: {args.image_path}")
 
     model = get_model(model_name=args.model_name, num_classes= args.num_classes, pre_trained=True, pretrained_path=args.checkpoint_path)
-
     model.to(device)
 
-    result = idx_to_class_covid[Predict_Singel_Image(model, args.image_path,args.dataset, device)]
+    dataset = args.dataset.lower()
+    if dataset == 'covid':
+        result = idx_to_class_covid[Predict_Singel_Image(model, args.image_path,dataset, device)]
+    elif dataset == 'mnist':
+        pass
     
 
     print(f"Prediction Result: Class {result} ")
