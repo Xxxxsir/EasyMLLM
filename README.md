@@ -1,0 +1,83 @@
+# EasyMLLM
+
+EasyMLLM is a lightweight machine learning library designed for training, testing, and inference on various models and datasets. It supports modularity and extensibility for different machine learning tasks.
+
+## Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repo/EasyMLLM.git
+   cd EasyMLLM
+   ```
+
+2. Create a virtual environment (optional but recommended):
+   ```bash
+   conda env create -f environment.yml
+   conda activate easymllm
+   ```
+
+3. Install the required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. Download the datasets (e.g., MNIST or COVID Radiography) and place them in the `data` directory.
+
+## Supported Models
+
+- **LeNet**
+- **ViT (Vision Transformer)**
+
+## Supported Datasets
+
+- **MNIST**
+- **COVID Radiography**
+
+## Usage
+
+### Training
+
+To train a model, use the `train.py` script. Example:
+
+```bash
+python train.py --model_name lenet \
+    --dataset_name mnist \
+    --classes_num 10 \
+    --batch_size 32 \
+    --epochs 10 \
+    --lr 0.001 \
+    --pre_trained False 
+```
+
+### Inference
+
+To perform inference on a single image or a batch of images, use the `inference.py` script. Example:
+
+#### Single Image Inference
+```bash
+python inference.py --model_name lenet --checkpoint_path ./model_ckpt/mnist_lenet.pth --test_data_path ./data/mnist/test/0.png --dataset mnist --num_classes 10
+```
+
+#### Batch Inference
+```bash
+python inference.py --model_name lenet --checkpoint_path ./model_ckpt/mnist_lenet.pth --test_data_path ./data/mnist/test --dataset mnist --num_classes 10
+```
+
+## Directory Structure
+
+```
+EasyMLLM/
+├── attack/                # Adversarial attack scripts
+├── data/                  # Dataset directory
+├── models/                # Model definitions
+├── model_ckpt/            # Model checkpoints
+├── utils.py               # Utility functions
+├── train.py               # Training script
+├── inference.py           # Inference script
+├── datasets.py            # Dataset loading and preprocessing
+└── README.md              # Project documentation
+```
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
