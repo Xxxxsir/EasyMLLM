@@ -1,6 +1,6 @@
 __pycache__/ 
 model_ckpt/ 
-datasets/
+data/
 .vscode/ 
 .idea/ 
 .ipynb_checkpoints/ 

@@ -79,6 +79,22 @@ def train_one_epoch(model,
 
     return train_loss, train_accuracy, val_loss, val_accuracy
 
+def test(model, test_loader, device='cpu'):
+    model.eval()
+    correct = 0
+    total = 0
+
+    with torch.no_grad():
+        for images, labels in test_loader:
+            images, labels = images.to(device), labels.to(device)
+            outputs = model(images)
+            _, predicted = torch.max(outputs, 1)
+            correct += (predicted == labels).sum().item()
+            total += labels.size(0)
+
+    accuracy = correct / total
+    print(f"Test Accuracy: {correct}/{total} = {accuracy:.4f}")
+    return accuracy
 
 def train(model_name:str,
           dataset_name:str,
@@ -127,6 +143,7 @@ def train(model_name:str,
             print(f"New best model saved with accuracy: {best_acc:.4f}")
     
     print(f"Training completed !")
+    
         
     
 def main():
@@ -145,7 +162,7 @@ def main():
     print(f"Loading dataset: {args.dataset_name}")
     train_loader, val_loader, test_loader = get_dataloaders(
         dataset_name=args.dataset_name,
-        dataset_root_dir=r".\datasets",
+        dataset_root_dir=r".\data",
         batch_size=args.batch_size,
         num_workers=4)
     
@@ -162,6 +179,11 @@ def main():
           momentum=0.9,
           save_dir="./model_ckpt"
     )
+
+    print("Start testing ...")
+    test_accuracy = test(model, test_loader, device=device)
+    print(f"Final Test Accuracy: {test_accuracy:.4f}")
+    print("Training and testing completed!")
     
 if __name__ == "__main__":
     main()

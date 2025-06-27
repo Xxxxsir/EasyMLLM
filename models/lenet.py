@@ -35,15 +35,20 @@ def lenet(num_classes:int = 10,pretrained:bool = False,pretrained_path:str = Non
         num_classes=num_classes,
     )
 
-    print(f"ViT Model Created with hyperparameters:\n"
-          f"  num_classes = {num_classes}\n")
+    print(f"Creating LeNet Model with hyperparameters:\n"
+          f"  num_classes = {num_classes}\n"
+          f"  loading pretrained parameters = {pretrained}\n"
+          f"  pretrained_path = {pretrained_path}\n")
 
     if pretrained:
         if pretrained_path is None:
             raise ValueError("pretrained_path must be specified when pretrained is True")
         
         checkpoint = torch.load(pretrained_path, map_location='cpu')
-        model.load_state_dict(checkpoint["model_state_dict"])
+        if isinstance(checkpoint, dict) and "model_state_dict" in checkpoint:
+            model.load_state_dict(checkpoint["model_state_dict"])
+        else:
+            model.load_state_dict(checkpoint)
         print(f"Load pretrained Lenet model Successfully from {pretrained_path}")
 
     return model

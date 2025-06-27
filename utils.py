@@ -22,6 +22,6 @@ def get_model(model_name:str, num_classes:int, pre_trained:bool = False, pretrai
     if model_name not in model_dict:
         raise ValueError(f"model is not supported from {list(model_dict.keys())}")
 
-    model = model_dict[model_name](num_classes=num_classes, pre_trained=pre_trained, pretrained_path=pretrained_path,**kwargs)
+    model = model_dict[model_name](num_classes=num_classes, pretrained=pre_trained, pretrained_path=pretrained_path,**kwargs)
 
     return model
