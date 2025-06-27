@@ -2,18 +2,23 @@ import torch
 from PIL import Image
 from models import model_dict 
 import os
-from datasets import get_transform_covidradiography,idx_to_class_covid
+from datasets import get_transform_covidradiography, get_transform
+from datasets import idx_to_class_covid, idx_to_class_mnist
 import argparse
 from utils import get_model
 
+dataset_supported = ['covid', 'mnist']
+
 def Predict_Singel_Image(model,img_path,dataset_name,device='cpu'):
     model.eval()
-    if dataset_name == 'covid':
-        transform = get_transform_covidradiography(split='test')
-    else:
-        raise ValueError(f"Dataset {dataset_name} is not supported yet")
+
+    transform = get_transform(dataset_name,split='test')
     
-    img = Image.open(img_path).convert("RGB")
+    if dataset_name.lower() == "mnist":
+        img = Image.open(img_path).convert("L") 
+    else:
+        img = Image.open(img_path).convert("RGB") 
+    
     img = transform(img).unsqueeze(0).to(device)
 
     with torch.no_grad():
@@ -45,11 +50,16 @@ if __name__ == '__main__':
     model.to(device)
 
     dataset = args.dataset.lower()
+    assert dataset in dataset_supported, f"Dataset {dataset} is not supported. Supported datasets: {dataset_supported}"
     if dataset == 'covid':
         result = idx_to_class_covid[Predict_Singel_Image(model, args.image_path,dataset, device)]
+        print(f"Prediction Result: Class {result} ")
     elif dataset == 'mnist':
-        pass
+        result = idx_to_class_mnist[Predict_Singel_Image(model, args.image_path, dataset, device)]
+        print(f"Prediction Result: number {result} ")
+    else:
+        raise ValueError(f"Dataset {dataset} is not supported yet")
     
 
-    print(f"Prediction Result: Class {result} ")
+    
     

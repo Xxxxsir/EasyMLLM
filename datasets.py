@@ -16,6 +16,8 @@ idx_to_class_covid = {
     3:"Viral Pneumonia",
 }
 
+idx_to_class_mnist = {i: str(i) for i in range(10)}
+
 class CovidRadioGraphyDataset(Dataset):
     def __init__(self,root_dir:str,transform=None):
 
