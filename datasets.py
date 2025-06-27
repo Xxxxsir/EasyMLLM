@@ -102,13 +102,13 @@ def get_dataloaders(dataset_name,dataset_root_dir,batch_size,num_workers=4, pin_
     root_dir = Path(dataset_root_dir)
     if dataset_name == "covid":
         train_dataset = CovidRadioGraphyDataset(root_dir=root_dir / "train", transform=get_transform_covidradiography("train"))
-        val_dataset   = CovidRadioGraphyDataset(root_dir=root_dir / "val", transform=get_transform_covidradiography("val"))
-        test_dataset  = CovidRadioGraphyDataset(root_dir=root_dir / "test", transform=get_transform_covidradiography("test"))
+        val_dataset   = CovidRadioGraphyDataset(root_dir=root_dir / "val",   transform=get_transform_covidradiography("val"))
+        test_dataset  = CovidRadioGraphyDataset(root_dir=root_dir / "test",  transform=get_transform_covidradiography("test"))
     elif dataset_name == "mnist":
         origin_train_dataset = datasets.MNIST(root=dataset_root_dir,train=True,download=True,transform=get_transform("mnist", "train"))
         # Split the MNIST dataset into train and validation sets
         train_size = 50000
-        val_size = 10000
+        val_size   = 10000
         train_dataset, val_dataset = random_split(origin_train_dataset, [train_size, val_size])
         test_dataset  = datasets.MNIST(root=dataset_root_dir,train=False,download=True,transform=get_transform("mnist", "test"))
     else:
