@@ -8,7 +8,7 @@ EasyMLLM is a beginner-friendly machine learning library designed to help studen
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-repo/EasyMLLM.git
+   git clone https://github.com/Xxxxsir/EasyMLLM.git
    cd EasyMLLM
    ```
 

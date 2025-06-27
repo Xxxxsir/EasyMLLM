@@ -8,7 +8,7 @@ EasyMLLM 是一个适用于初学者的机器学习库，旨在帮助像我一�
 
 1. 克隆仓库：
    ```bash
-   git clone https://github.com/your-repo/EasyMLLM.git
+   git clone https://github.com/Xxxxsir/EasyMLLM.git
    cd EasyMLLM
    ```
 
