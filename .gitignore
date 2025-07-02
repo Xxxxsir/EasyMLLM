@@ -1,7 +1,7 @@
 __pycache__/ 
 model_ckpt/ 
 data/
-agent\llm_core\api_keys.py
+agent/llm_core/api_keys.py
 .vscode/ 
 .idea/ 
 .ipynb_checkpoints/ 
